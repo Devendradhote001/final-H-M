@@ -1,18 +1,26 @@
 import React, { useEffect } from "react";
-import { axiosInstance } from "../config/axiosInstance";
-import { useQuery } from "@tanstack/react-query";
-import { getProductByCategory } from "../apis/ProductApis";
+import { fetchProductDataHook } from "../hooks/ladiesHook";
+import { useDispatch, useSelector } from "react-redux";
+import { setMessage } from "../features/errorSlice";
 
 const LadiesPage = () => {
-  const { data } = useQuery({
-    queryKey: ["ladies products"],
-    queryFn: () => getProductByCategory("ladies"),
-    staleTime: Infinity,
-  });
-
+  const dispatch = useDispatch();
+  const { data, isPending, error } = fetchProductDataHook("ladies");
   console.log(data);
 
-  return <div>this is LAdies page</div>;
+  const { message } = useSelector((state) => state.error);
+  console.log(message);
+
+  if (isPending) return <h1>Loading....</h1>;
+
+  return (
+    <div>
+      <h1>reduc me jo hai vo dikhega--{message}</h1>
+      <button onClick={() => dispatch(setMessage("gaali mat do"))}>
+        Add message
+      </button>
+    </div>
+  );
 };
 
 export default LadiesPage;

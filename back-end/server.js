@@ -4,6 +4,7 @@ const cors = require("cors");
 const authRoutes = require("./src/routes/auth.routes");
 const productRoutes = require("./src/routes/product.routes");
 const sellerAuthRoutes = require("./src/routes/sellerAuth.routes");
+const paymentRoutes = require("./src/routes/payment.routes");
 
 const connectDB = require("./src/config/db");
 const cookieParser = require("cookie-parser");
@@ -24,6 +25,7 @@ connectDB();
 app.use("/api/auth/user", authRoutes);
 app.use("/api/auth/seller", sellerAuthRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/payment", paymentRoutes);
 
 let port = process.env.port || 4500;
 

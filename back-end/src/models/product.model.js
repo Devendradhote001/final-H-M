@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { type } = require("../validator/user.validation");
+const { string } = require("joi");
 
 const productSchema = new mongoose.Schema(
   {
@@ -44,6 +46,13 @@ const productSchema = new mongoose.Schema(
     seller_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "seller",
+    },
+    razorpay_order_id: {
+      type: String,
+    },
+    payment_status: {
+      type: String,
+      enum: ["pending", "failed", "success"],
     },
   },
   {

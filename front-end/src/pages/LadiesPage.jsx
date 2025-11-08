@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { fetchProductDataHook } from "../hooks/ladiesHook";
 import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../features/errorSlice";
+import ProductCard from "../components/ProductCard";
 
 const LadiesPage = () => {
   const dispatch = useDispatch();
@@ -9,16 +10,17 @@ const LadiesPage = () => {
   console.log(data);
 
   const { message } = useSelector((state) => state.error);
-  console.log(message);
 
   if (isPending) return <h1>Loading....</h1>;
 
   return (
     <div>
-      <h1>reduc me jo hai vo dikhega--{message}</h1>
-      <button onClick={() => dispatch(setMessage("gaali mat do"))}>
-        Add message
-      </button>
+      <h1>Products</h1>
+      <div className="flex gap-5">
+        {data?.productsData.map((elem) => {
+          return <ProductCard key={elem._id} product={elem} />;
+        })}
+      </div>
     </div>
   );
 };
